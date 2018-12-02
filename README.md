@@ -19,7 +19,7 @@ docker-compose exec django bash
 
 ## Stop Service
 ```
-docker-compose down
+docker-compose stop
 ```
 
 ## SetUp for MySQL User

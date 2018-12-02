@@ -13,11 +13,12 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 import environ
 
-env = environ.Env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+env = environ.Env()
+env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -77,21 +78,23 @@ WSGI_APPLICATION = 'django_docker_template.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django',
-        'USER': 'django',
-        'PASSWORD': 'django',
-        'HOST': 'db',
-        'PORT': 3306,
-        'ATOMIC_REQUESTS': True,
-    }
-}
 # DATABASES = {
-#     'default': env.db()
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'django',
+#         'USER': 'django',
+#         'PASSWORD': 'django',
+#         'HOST': 'db',
+#         'PORT': 3306,
+#         'ATOMIC_REQUESTS': True,
+#     }
 # }
-# DATABASES['default']['ATOMIC_REQUESTS'] = True
+
+# .evnファイルから設定を読み込む
+DATABASES = {
+    'default': env.db()
+}
+DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
