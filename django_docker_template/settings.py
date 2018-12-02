@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+import environ
+
+env = environ.Env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -76,11 +79,19 @@ WSGI_APPLICATION = 'django_docker_template.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django',
+        'USER': 'django',
+        'PASSWORD': 'django',
+        'HOST': 'db',
+        'PORT': 3306,
+        'ATOMIC_REQUESTS': True,
     }
 }
-
+# DATABASES = {
+#     'default': env.db()
+# }
+# DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

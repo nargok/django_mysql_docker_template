@@ -1,5 +1,17 @@
-version: "2"
+version: "3"
 services:
+  db:
+    container_name: mysql_database
+    image: mysql
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: django
+      MYSQL_USER: django
+      MYSQL_PASSWORD: django
   django:
     container_name: django_server
     build:
@@ -12,15 +24,6 @@ services:
       - .:/var/www/myproject
     ports:
       - "8000:8000"
-    links:
+    depends_on:
       - db
-    environment:
-      - DATABASE_URL=mysql://root:password@db:3306/django_docker_template_db
 
-  db:
-    container_name: mysql_database
-    image: mysql/mysql-server
-    ports:
-      - "3306:3306"
-    environment:
-      - MYSQL_ROOT_PASSWORD=password
