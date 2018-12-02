@@ -21,3 +21,18 @@ docker-compose exec django bash
 ```
 docker-compose down
 ```
+
+## SetUp for MySQL User
+
+### Login to MySQL Container
+```
+docker-compose exec db bash
+```
+
+### Change MySQL User setting
+```
+mysql -u root -p
+
+mysql > ALTER USER 'django'@'%' IDENTIFIED WITH mysql_native_password BY 'django'; 
+mysql > FLUSH PRIVILEGES;
+```
